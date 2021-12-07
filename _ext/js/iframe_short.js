@@ -1,0 +1,4 @@
+var HTML = '<iframe width="630" height="450" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.it/maps?f=q&amp;source=s_q&amp;hl=it&amp;geocode=&amp;q=cerreto+guidi&amp;aq=&amp;sll=41.442726,12.392578&amp;sspn=17.476669,38.232422&amp;ie=UTF8&amp;hq=&amp;hnear=Cerreto+Guidi+Firenze,+Toscana&amp;ll=43.759825,10.880166&amp;spn=0.263338,0.597382&amp;t=m&amp;z=12&amp;output=embed"></iframe><br /><small><a href="http://maps.google.it/maps?f=q&amp;source=embed&amp;hl=it&amp;geocode=&amp;q=cerreto+guidi&amp;aq=&amp;sll=41.442726,12.392578&amp;sspn=17.476669,38.232422&amp;ie=UTF8&amp;hq=&amp;hnear=Cerreto+Guidi+Firenze,+Toscana&amp;ll=43.759825,10.880166&amp;spn=0.263338,0.597382&amp;t=m&amp;z=12" style="color:#000;text-align:left">Visualizzazione ingrandita della mappa</a></small>';
+
+document.write(HTML);
+

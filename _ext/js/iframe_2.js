@@ -1,0 +1,9 @@
+//var HTML = '<div id="TA_excellent314" class="TA_excellent"><ul id="QjsXPQ0ydTK" class="TA_links BAQucOq"><li id="rshMeU" class="XOdu6VISYmD"><a target="_blank" href=http://www.tripadvisor.it/Hotel_Review-g187901-d1095267-Reviews-Agriturismo_Casolare_di_Bucciano-San_Gimignano_Tuscany.html>Agriturismo Casolare di Bucciano</a> è stato votato "eccellente" da viaggiatori</li></ul></div><script src="http://www.jscache.com/wejs?wtype=excellent&amp;uniq=314&amp;locationId=1095267&amp;lang=it"></script><br/><div id="TA_certificateOfExcellence553" class="TA_certificateOfExcellence"><ul id="jWhjj9UidLBr" class="TA_links fbxsAs9W"><li id="NhlEFS2Saz" class="F1kFQpq8"><a target="_blank" href="https://www.tripadvisor.it/"><img src="https://www.tripadvisor.it/img/cdsi/img2/awards/CoE2016_WidgetAsset-14348-2.png" alt="TripAdvisor" class="widCOEImg" id="CDSWIDCOELOGO"/></a></li></ul></div><script src=\'https://www.jscache.com/wejs?wtype=certificateOfExcellence&amp;uniq=553&amp;locationId=1095267&amp;lang=it&amp;year=2015&amp;display_version=2\'></script><div id="TA_certificateOfExcellence957" class="TA_certificateOfExcellence"><ul id="j0GgRI4M" class="TA_links iCKDDd3"><li id="nbAeQug" class="sxeROttRf"><a target="_blank" href="https://www.tripadvisor.it/Hotel_Review-g187901-d1095267-Reviews-Agriturismo_Il_Casolare_di_Bucciano-San_Gimignano_Tuscany.html"><img src="https://www.tripadvisor.it/img/cdsi/img2/awards/CoE2016_WidgetAsset-14348-2.png" alt="TripAdvisor" class="widCOEImg" id="CDSWIDCOELOGO"/></a></li></ul></div><script src="https://www.jscache.com/wejs?wtype=certificateOfExcellence&amp;uniq=957&amp;locationId=1095267&amp;lang=it&amp;year=2016&amp;display_version=2"></script>';
+
+//document.write(HTML)
+
+
+ 
+ 
+
+ 

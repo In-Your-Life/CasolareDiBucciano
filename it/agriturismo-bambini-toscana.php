@@ -1,0 +1,507 @@
+<?php 
+session_start();
+
+
+$filename=$_SERVER['DOCUMENT_ROOT']."/form_session.txt";
+if(file_exists($filename))
+{
+	$fp = fopen($filename, "r");
+	$data = fread($fp,filesize($filename));
+	$data_array=explode("|-|",substr($data, 0, strlen($data)-3));
+	foreach($data_array as $chiave=>$valore)
+	{
+		$value_tmp_array=explode("<-->",$valore);
+		$_SESSION[$value_tmp_array[0]]=$value_tmp_array[1];
+	}
+	unlink($filename);
+}
+function recupero_url()
+{
+	if (isset($_SERVER['HTTPS'])) 
+	{
+		$protocol= "https";
+	}
+	else 
+	{ 
+		$protocol= "http";
+	}
+	return strtolower($protocol."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+}
+
+function encrypt_decrypt($action, $string) {
+    $output = false;
+
+    $encrypt_method = "AES-256-CBC";
+    $secret_key = 't64td2';
+    $secret_iv = '6#ut4@fsawq4';
+
+    // hash
+    $key = hash('sha256', $secret_key);
+    
+    // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+    $iv = substr(hash('sha256', $secret_iv), 0, 16);
+
+    if( $action == 'encrypt' ) {
+        $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
+        $output = base64_encode($output);
+    }
+    else if( $action == 'decrypt' ){
+        $output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+    }
+
+    return $output;
+}	
+
+
+?>
+<?php
+require_once("../_ext/include/mobile_detect.php");
+$detect = new Mobile_Detect;
+
+if($detect->isMobile() && $_GET['m']!="no")
+{
+    header("Location: http://m.casolaredibucciano.it/");
+    die();
+}
+if (($_SERVER["HTTP_HOST"]=="www.casolaredibucciano.eu") or ($_SERVER["HTTP_HOST"]=="casolaredibucciano.eu")) {
+	header("HTTP/1.1 301 Moved Permanently"); 
+header("Location: http://www.casolaredibucciano.it/it/agriturismo-bambini-toscana.php"); 
+
+
+
+}
+$idl = "_ita";
+$idp = 17;
+include_once('../_ext/include/allarray.php');
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Agriturismo Bambini Toscana - Agriturismo Bambini Siena - Agriturismo Bambini San Gimignano</title>
+<meta name="Keywords" content="agriturismo, toscana, san gimignano, siena, agriturismi, ristorante, piscina, camere, romantico, charme, mezza pensione, pensione completa" />
+<meta name="Description" content="<?php include_once('../_ext/include/description.php'); ?>" />
+<meta name="language" content="it" /> 
+<meta name="author" content="Designed by InYourLife- http://www.inyourlife.info" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="../_ext/css/layout.css" />
+<link rel="shortcut icon" href="../favicon.ico"/>
+<script type="text/javascript" src="../_ext/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="../_ext/js/preferiti.js"></script>
+
+<link rel="stylesheet" href="../_ext/css/jquery.spotslider_gallery.css" type="text/css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+<script src="jquery.spotslider_1.js"  type="text/javascript"></script>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	newsSlider_1();
+});
+</script>
+
+
+
+
+<!-- Add jQuery library -->
+	<script type="text/javascript" src="../_ext/lib/jquery-1.8.0.min.js"></script>
+
+	<!-- Add mousewheel plugin (this is optional) -->
+	<script type="text/javascript" src="../_ext/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+
+	
+
+
+
+
+
+
+
+<script type="text/javascript">
+<!--
+$(document).ready(function () {
+      $('#nav li, #nav_2 li, #nav_3 li, #nav_4 li, #nav_5 li').hover(
+        function () {
+            //mostra sottomenu
+            $('ul', this).stop(true, true).delay(50).slideDown(100);
+ 
+        }, 
+        function () {
+            //nascondi sottomenu
+            $('ul', this).stop(true, true).slideUp(200);        
+        }
+    );
+	
+	
+});
+
+$("a").mouseover(function(){
+  $("a").css("font-weight","bold");
+});
+
+-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+$(document).ready(function () {
+      $("li a.select").mouseover(function(){
+  $(this).css("font-weight","bold");
+});
+      $("li a.select").mouseout(function(){
+  $(this).css("font-weight","100");
+});
+	
+});
+
+
+-->
+</script>
+
+
+<script src="../_ext/js/datetimepicker_css.js" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+
+function MM_validateForm() { //v4.0
+  var i,p,q,nm,test,num,min,max,errors='',args=MM_validateForm.arguments;
+  for (i=0; i<(args.length-2); i+=3) { test=args[i+2]; val=MM_findObj(args[i]);
+    if (val) { nm=val.name; if ((val=val.value)!="") {
+      if (test.indexOf('isEmail')!=-1) { p=val.indexOf('@');
+        if (p<1 || p==(val.length-1)) errors+='- '+nm+' must contain an e-mail address.\n';
+      } else if (test!='R') { num = parseFloat(val);
+        if (isNaN(val)) errors+='- '+nm+' must contain a number.\n';
+        if (test.indexOf('inRange') != -1) { p=test.indexOf(':');
+          min=test.substring(8,p); max=test.substring(p+1);
+          if (num<min || max<num) errors+='- '+nm+' must contain a number between '+min+' and '+max+'.\n';
+    } } } else if (test.charAt(0) == 'R') errors += nm+' è un campo obbligatorio.\n'; }
+  } if (errors) alert('Attenzione:\n'+errors);
+  document.MM_returnValue = (errors == '');
+}
+
+function MM_displayStatusMsg(msgStr) { //v1.0
+  status=msgStr;
+  document.MM_returnValue = true;
+}
+
+function abilita() {
+	if(document.getElementById('privacy').checked) document.getElementById('invia').disabled=false;
+	else document.getElementById('invia').disabled=true;
+	}
+
+
+//-->
+</script>
+
+
+<!--[if lte IE 7]> 
+<style type="text/css">
+.headerimg {top:20px; position:absolute;}
+</style>
+<![endif]-->
+
+<link rel="stylesheet" href="../_ext/css/colorbox.css" />
+	
+		<script src="../_ext/js/jquery.colorbox.js"></script>
+		<script>
+			$(document).ready(function(){
+				//Examples of how to assign the ColorBox event to elements
+				$(".fancybox").colorbox({rel:'fancybox'});
+	
+		
+				$(".callbacks").colorbox({
+					onOpen:function(){ alert('onOpen: colorbox is about to open'); },
+					onLoad:function(){ alert('onLoad: colorbox has started to load the targeted content'); },
+					onComplete:function(){ alert('onComplete: colorbox has displayed the loaded content'); },
+					onCleanup:function(){ alert('onCleanup: colorbox has begun the close process'); },
+					onClosed:function(){ alert('onClosed: colorbox has completely closed'); }
+				});
+				
+				//Example of preserving a JavaScript event for inline calls.
+				$("#click").click(function(){ 
+					$('#click').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+					return false;
+				});
+			});
+		</script>
+
+<link type="text/css" href="../_ext/css/horizontal-box-style.css" rel="stylesheet" />
+	<script type="text/javascript" src="http://www.simplebooking.it/search-box-script.axd?IDA=1937"></script>
+		<script type="text/javascript">
+		var SBParameters = {
+			CodLang: 'IT'
+		};
+	</script>
+<link rel="stylesheet" type="text/css" href="../_ext/css/layout.css" />
+</head>
+
+<body>
+
+<div id="fb-root"></div>
+<script type="text/javascript">(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/it_IT/all.js#xfbml=1&amp;appId=259098687437182";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<div id="striscia_top">
+<h1><?php include_once('../_ext/include/h1.php'); ?></h1>
+</div>
+
+<div id="container_large">
+
+<div id="container">
+
+<div id="menu_alto">
+<?php include_once('../_ext/include/menu_alto.php'); ?>
+</div>
+
+<div id="logo">
+<?php include_once('../_ext/include/logo.php'); ?>
+</div>
+
+<div id="preferiti">
+<?php include_once('../_ext/include/preferiti.php'); ?>
+</div>
+
+</div>
+
+
+<div id="header_1" style="background-image:url(../_ext/img/agriturismo_bambini_toscana_10.jpg);">
+	<!-- jQuery handles to place the header background images -->
+	
+	<!-- Top navigation on top of the images -->
+</div>
+
+</div>
+
+
+<div id="box_int">
+
+<div id="gallery_slider">
+<?php include_once('../_ext/include/foto_gallery_contatti.php'); ?>
+</div>
+
+<div id="menu_box">
+<?php include_once('../_ext/include/menu_box.php'); ?>
+</div>
+</div>
+
+<div class="clear_float" style="height:10px;"></div>
+
+
+<div id="simple_booking">
+<?php include_once('../_ext/include/simple_booking.php'); ?>
+</div>
+
+
+
+<div id="content_wide">
+
+<div id="content">
+
+
+
+<div id="home_sx">
+
+<div id="titolo">
+CONTATTI
+</div>
+<?php
+if(isset($_GET['e']))
+{
+    echo '<div style="border:1px solid red;margin:10px;padding:10px;border-radius:10px;">
+    Si prega di verificare i campi
+    </div>';
+}
+?>
+<form action="http://utilities.inyourlife.info/webmail.php" method="post" id="form2" onsubmit="MM_validateForm('email','','RisEmail');return document.MM_returnValue">
+<input type="hidden" name="ip" id="ip" value="<?php echo encrypt_decrypt("encrypt", $_SERVER ['REMOTE_ADDR']);?>">
+<input type="hidden" name="email_destinatario" value="<?php echo encrypt_decrypt("encrypt", "info@casolaredibucciano.com"); ?>">
+<input type="hidden" name="conferma" id="conferma" value="http://www.casolaredibucciano.it/it/conferma.php">
+<input type="hidden" name="errore" id="errore" value="">
+
+<input type="hidden" name="l" value="ita" />      
+      <table width="100%" style="line-height:1.4em;">
+		<tr>
+          <td>Nome &amp;<br/>Cognome</td>
+          <td colspan="4"><input class="form" name="nome" type="text" id="nome" size="50" value="<?php echo $_SESSION['nome'];?>"/></td></tr>
+          <tr></tr>
+          <tr>
+          <td>E-mail*</td>
+          <td><input class="form" name="email" type="text" id="email" size="30" value="<?php echo $_SESSION['email'];?>"/></td>
+    
+          <td>Telefono</td>
+          <td><input class="form" name="telefono" type="text" id="telefono" size="20" value="<?php echo $_SESSION['telefono'];?>"/></td></tr>
+     <tr></tr>
+          <tr>
+          <td>N. adulti </td>
+          <td>
+          <select name="n_adulti" size="1" >
+<option value="1" <?php if($_SESSION['n_adulti'] == 1) echo 'selected'; ?>>1</option>
+<option value="2" <?php if($_SESSION['n_adulti'] == 2) echo 'selected'; ?>>2</option>
+<option value="3" <?php if($_SESSION['n_adulti'] == 3) echo 'selected'; ?>>3</option>
+<option value="4" <?php if($_SESSION['n_adulti'] == 4) echo 'selected'; ?>>4</option>
+<option value="5" <?php if($_SESSION['n_adulti'] == 5) echo 'selected'; ?>>5</option>
+<option value="6" <?php if($_SESSION['n_adulti'] == 6) echo 'selected'; ?>>6</option>
+<option value="7" <?php if($_SESSION['n_adulti'] == 7) echo 'selected'; ?>>7</option>
+<option value="8" <?php if($_SESSION['n_adulti'] == 8) echo 'selected'; ?>>8</option>
+<option value="9" <?php if($_SESSION['n_adulti'] == 9) echo 'selected'; ?>>9</option>
+<option value="10" <?php if($_SESSION['n_adulti'] == 10) echo 'selected'; ?>>10</option>
+<option value="11" <?php if($_SESSION['n_adulti'] == 11) echo 'selected'; ?>>11</option>
+<option value="12" <?php if($_SESSION['n_adulti'] == 12) echo 'selected'; ?>>12</option>
+<option value="13" <?php if($_SESSION['n_adulti'] == 13) echo 'selected'; ?>>13</option>
+<option value="14" <?php if($_SESSION['n_adulti'] == 14) echo 'selected'; ?>>14</option>
+<option value="15" <?php if($_SESSION['n_adulti'] == 15) echo 'selected'; ?>>15</option>
+</select></td>
+<td>
+N. bambini </td>
+<td>
+<select name="n_bambini" size="1" >
+<option value="0" <?php if($_SESSION['n_bambini'] == 0) echo 'selected'; ?>>0</option>
+<option value="1" <?php if($_SESSION['n_bambini'] == 1) echo 'selected'; ?>>1</option>
+<option value="2" <?php if($_SESSION['n_bambini'] == 2) echo 'selected'; ?>>2</option>
+<option value="3" <?php if($_SESSION['n_bambini'] == 3) echo 'selected'; ?>>3</option>
+<option value="4" <?php if($_SESSION['n_bambini'] == 4) echo 'selected'; ?>>4</option>
+<option value="5" <?php if($_SESSION['n_bambini'] == 5) echo 'selected'; ?>>5</option>
+<option value="6" <?php if($_SESSION['n_bambini'] == 6) echo 'selected'; ?>>6</option>
+<option value="7" <?php if($_SESSION['n_bambini'] == 7) echo 'selected'; ?>>7</option>
+<option value="8" <?php if($_SESSION['n_bambini'] == 8) echo 'selected'; ?>>8</option>
+<option value="9" <?php if($_SESSION['n_bambini'] == 9) echo 'selected'; ?>>9</option>
+<option value="10" <?php if($_SESSION['n_bambini'] == 10) echo 'selected'; ?>>10</option>
+<option value="11" <?php if($_SESSION['n_bambini'] == 11) echo 'selected'; ?>>11</option>
+<option value="12" <?php if($_SESSION['n_bambini'] == 12) echo 'selected'; ?>>12</option>
+<option value="13" <?php if($_SESSION['n_bambini'] == 13) echo 'selected'; ?>>13</option>
+<option value="14" <?php if($_SESSION['n_bambini'] == 14) echo 'selected'; ?>>14</option>
+<option value="15" <?php if($_SESSION['n_bambini'] == 15) echo 'selected'; ?>>15</option>
+</select>
+</td></tr>
+<tr></tr>
+        <tr>
+          <td>Data arrivo</td>
+          <td><input name="arrivo" onclick="javascript:NewCssCal('arrivo','ddmmYYY','arrow')" type="text" id="arrivo" size="12" value="<?php echo $_SESSION['arrivo'];?>"/></td>
+          <td>Data partenza</td>
+          <td><input name="partenza" onclick="javascript:NewCssCal('partenza','ddmmYYY','arrow')" type="text" id="partenza" size="12" value="<?php echo $_SESSION['partenza'];?>"/></td>
+        </tr>
+        
+        <tr><td colspan='4'><span style="color:#fff; font-size:16px;"><?php echo $_SESSION["errmsg"];?></span></td></tr>
+  
+        <tr><td colspan='4'><span style="color:#C00; font-size:16px;"><?php echo $_SESSION["errmsg"];?></span></td></tr>
+		
+        <tr><td><br/></td></tr>
+        
+         <tr><td  colspan="4">
+        
+        <?php if($_SESSION['copia_mittente']==NULL)  { ?>  <input  type="checkbox" name="copia_mittente" id="copia_mittente" value="copia_si"/>&nbsp;&nbsp;Seleziona per ricevere una copia della tua richiesta
+        
+                <?php } else { ?><input  type="checkbox" name="copia_mittente" id="copia_mittente" value="<?php echo $_SESSION['copia_mittente'];?>" checked />&nbsp;&nbsp;Seleziona per ricevere una copia della tua richiesta
+    
+          <?php  } ?>
+        </td></tr>
+        
+                <tr><td><br/></td></tr>
+      </table>
+  
+
+      <h4 style="text-align:center; font-size:14px; color:#000; margin:0; padding:0;">Richiesta</h4>
+      
+          <p style="text-align:center; margin:0;"><textarea name="richieste_particolari" cols="55" rows="3" class="form" id="richieste_particolari"><?php echo $_SESSION['richieste_particolari'];?></textarea>
+      </p>
+      <p style="text-align:center; margin:0;">Privacy*Acconsento al trattamento dei miei dati (<a href="#" onclick="MM_openBrWindow('informativa.htm','informativa','scrollbars=yes,width=550,height=650');MM_displayStatusMsg('Informativa Privacy');return document.MM_returnValue" onmouseover="MM_displayStatusMsg('Informativa Privacy');return document.MM_returnValue" onmouseout="MM_displayStatusMsg('');return document.MM_returnValue" style="color:#000;">Privacy</a>)
+          <input class="form" name="privacy" type="checkbox" id="privacy"  value="Privacy" checked="checked" onclick="abilita()"/>
+          <br /><br/>
+        
+          <input name="invia" type="submit" class="form" id="invia" value="Invia" />
+          <input name="annulla" type="reset" class="form" id="annulla" value="Cancella" />
+      </p>
+    </form><br/>
+    <span style="font-size:11px">(*) campi obbligatori </span><br/><br/>
+
+
+
+
+<br/><br/>
+<h2><?php include_once('../_ext/include/h2.php'); ?></h2>
+
+
+<div id="social">
+<script type="text/javascript" src="../_ext/js/iframe.js"></script>
+
+ 
+
+
+<!-- <div style="float:left; width:160px; margin-left:30px; margin-top:10px; text-align:center;">
+<script type="text/javascript" src="_ext/js/iframe_2.js"></script>
+</div> -->
+
+
+<div style="float:left; width:160px; margin-left:30px; margin-top:20px;">
+<script type="text/javascript" src="../_ext/js/iframe_3.js"></script>
+</div>
+
+<div style="float:left; width:160px; margin-left:30px; margin-top:20px;">
+<div id="hc-ratingRatingHotel"> <div id="hc-ratingRatingHotel__inner"> <img id="hc-ratingRatingHotel__ribbon" src="https://media.datahc.com/ratinghotel/stellar2/ribbon.png"/> <span id="hc-ratingRatingHotel__year">2017</span> <span id="hc-ratingRatingHotel__award">ATTESTATO DI ECCELLENZA</span> <div id="hc-ratingRatingHotel__hotelink"> <a id="hc-ratingRatingHotel__hotelname" target="_blank" href="javascript:void(0)">Agriturismo Casolare di Bucciano</a> </div> <a id="hc-ratingRatingHotel__hclink" target="_blank" href="https://www.hotelscombined.it/">HotelsCombined</a> </div> <div id="hc-ratingRatingHotel__rating"> <span id="hc-ratingRatingHotel__number">9.2</span> <span id="hc-ratingRatingHotel__pipe"></span> <span id="hc-ratingRatingHotel__ratedby">Voto ospiti</span> </div> </div> <div id="hc-data__hotellink" style="display: none;">Agriturismo_Casolare_di_Bucciano</div> <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"> </script> <script>(function(){var rand = Math.floor((Math.random() * 99999999) + 1); function loadjscssfile(a,b){if("js"==b){var c=document.createElement("script");c.setAttribute("type","text/javascript"),c.setAttribute("src",a)}else if("css"==b){var c=document.createElement("link");c.setAttribute("rel","stylesheet"),c.setAttribute("type","text/css"),c.setAttribute("href",a)}"undefined"!=typeof c&&document.getElementsByTagName("head")[0].appendChild(c)} loadjscssfile('https://media.datahc.com/ratinghotel/stellar2/styles.css?v' + rand, 'css'); loadjscssfile('https://media.datahc.com/ratinghotel/stellar2/script.js?v' + rand, 'js'); })(); </script>
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<div id="home_dx">
+<p style="margin-left:50px;">
+<a href="http://www.casolaredibucciano.it " title="<?php include('../_ext/include/alt.php'); ?>"><strong>Agriturismo Casolare di Bucciano</strong></a><br/><br/>
+Azienda Agricola Signano<br/>Località Racciano-Bucciano<br/>53037 San Gimignano (SI)<br/><br/>Tel +39 0577 940189<br/>Fax +39 0577-906956<br/><br/><a href="mailto:info@casolaredibucciano.com?subject=Richiesta inviata da www.casolaredibucciano.it" title="<?php include('../_ext/include/alt.php'); ?>"><strong>info@casolaredibucciano.com</strong></a></p>
+
+<p style="margin:0;  padding:0; text-align:center; margin-top:20px;">
+<img src="../_ext/img/agriturismo_bambini_toscana_40.jpg" alt="<?php include('../_ext/include/alt.php'); ?>" class="img_rounded"/>
+</p>
+</div>
+
+
+<div class="clear_float"></div>
+
+</div>
+</div>
+
+<div id="indirizzo_wide">
+<div id="indirizzo">
+<?php include_once('../_ext/include/indirizzo.php'); ?>
+</div>
+</div>
+
+
+</body>
+
+<?php require_once($_SERVER['DOCUMENT_ROOT']."/google_analytics.php");?></html>

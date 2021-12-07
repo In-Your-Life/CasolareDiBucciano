@@ -1,0 +1,12 @@
+Redirect 301 /appartam/appabar.htm http://www.casolaredibucciano.it
+Redirect 301 /prodotti/olio.htm http://www.casolaredibucciano.it
+Redirect 301 /prodotti/sangi.htm http://www.casolaredibucciano.it
+Redirect 301 /prodotti/chianti.htm http://www.casolaredibucciano.it
+Redirect 301 /agriturismo.htm http://www.casolaredibucciano.it
+Redirect 301 /azienda.htm http://www.casolaredibucciano.it
+
+
+
+Redirect 301 /c/wos4.php http://www.casolaredibucciano.it
+Redirect 301 /listino.htm http://www.casolaredibucciano.it
+Redirect 301 /index.htm http://www.casolaredibucciano.it
